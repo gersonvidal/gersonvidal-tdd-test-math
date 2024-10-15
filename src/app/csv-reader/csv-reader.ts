@@ -1,6 +1,6 @@
 import Papa from 'papaparse';
 
-export function readCSV(file: File): Promise<number[]> {
+export function readCsv(file: File): Promise<number[]> {
   return new Promise((resolve) => {
     Papa.parse(file, {
       complete: (results) => {

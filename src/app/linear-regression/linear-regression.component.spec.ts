@@ -18,11 +18,11 @@ describe('linear regression test suite', () => {
   });
 
   describe('Dataset 1', () => {
-    const proxy_size = '130\n650\n99\n150\n128\n302\n95\n945\n368\n961\n';
-    const actual_added = '186\n699\n132\n272\n291\n331\n199\n1890\n788\n1601\n';
+    const proxySize = '130\n650\n99\n150\n128\n302\n95\n945\n368\n961\n';
+    const actualAdded = '186\n699\n132\n272\n291\n331\n199\n1890\n788\n1601\n';
 
-    const proxySizeArray = proxy_size.trim().split('\n');
-    const actualAddedArray = actual_added.trim().split('\n');
+    const proxySizeArray = proxySize.trim().split('\n');
+    const actualAddedArray = actualAdded.trim().split('\n');
 
     let csvContent = 'proxy_size,actual_added\n'; // Headers
     for (
@@ -63,4 +63,40 @@ describe('linear regression test suite', () => {
       expect(result).toBeCloseTo(644.429, 3);
     });
   });
+
+  describe('Dataset 2', () => {
+    const proxySize = '130\n650\n99\n150\n128\n302\n95\n945\n368\n961\n';
+    const actualDevelop = '15.0\n69.9\n6.5\n22.4\n28.4\n65.9\n19.4\n198.7\n38.8\n138.2\n';
+
+    const proxySizeArray = proxySize.trim().split('\n');
+    const actualDevelopArray = actualDevelop.trim().split('\n');
+
+    let csvContent = 'proxy_size,actual_added\n'; // Headers
+    for (
+      let i = 0;
+      i < Math.min(proxySizeArray.length, actualDevelopArray.length);
+      i++
+    ) {
+      csvContent += `${proxySizeArray[i]},${actualDevelopArray[i]}\n`;
+    }
+
+    const csvBlob = new Blob([csvContent], { type: 'text/csv' });
+    const csvFile = new File([csvBlob], 'data.csv');
+
+    it('Should return B0 = -4.039 with the dataset when proxySize = [130,650,99,150,128,302,95,945,368,961] and actualDevelop = [15.0,69.9,6.5,22.4,28.4,65.9,19.4,198.7,38.8,138.2]', async () => {
+      
+
+  });
+
+  it('Should return B1 = 0.1681 with the dataset when proxySize = [130,650,99,150,128,302,95,945,368,961] and actualDevelop = [15.0,69.9,6.5,22.4,28.4,65.9,19.4,198.7,38.8,138.2]', async () => {
+      
+
+  });
+
+  it(' Should return yk = 60.858 with the dataset when proxySize = [130,650,99,150,128,302,95,945,368,961] and actualDevelop = [15.0,69.9,6.5,22.4,28.4,65.9,19.4,198.7,38.8,138.2] and if x = 386', async () => {
+      
+
+  });
+
+
 });

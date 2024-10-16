@@ -9,7 +9,6 @@ import { sumX, sumY, sumXY, sumX2, sumY2 } from '../common/calculate';
   styleUrl: './linear-regression.component.css',
 })
 export class LinearRegressionComponent {
-  // TODO: Import SUMS from Calculate
 
   static calculateBeta1(data: number[][]): number {
     const n = data.length; // Get the length of the data

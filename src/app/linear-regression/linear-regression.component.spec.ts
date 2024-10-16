@@ -36,7 +36,7 @@ describe('linear regression test suite', () => {
     const csvBlob = new Blob([csvContent], { type: 'text/csv' });
     const csvFile = new File([csvBlob], 'data.csv');
 
-    it('Should return B0 = -22.55 with the dataset when proxySize = [130,650,99,150,128,302,95,945,368,961] and actualAdded = [186,699,132,272,291,31,199,1890,788,1601]', async () => {
+    it('Should return B0 = -22.55 with the dataset when proxySize = [130,650,99,150,128,302,95,945,368,961] and actualAdded = [186,699,132,272,291,331,199,1890,788,1601]', async () => {
       const dataset = await readCsvWithColumns(csvFile);
       const beta1 = LinearRegressionComponent.calculateBeta1(dataset);
 
@@ -45,14 +45,14 @@ describe('linear regression test suite', () => {
       expect(result).toBeCloseTo(-22.55, 2);
     });
 
-    it('Should return B1 = 1.7279 with the dataset when proxySize = [130,650,99,150,128,302,95,945,368,961] and actualAdded = [186,699,132,272,291,31,199,1890,788,1601]', async () => {
+    it('Should return B1 = 1.7279 with the dataset when proxySize = [130,650,99,150,128,302,95,945,368,961] and actualAdded = [186,699,132,272,291,331,199,1890,788,1601]', async () => {
       const dataset = await readCsvWithColumns(csvFile);
       const result = LinearRegressionComponent.calculateBeta1(dataset);
 
       expect(result).toBeCloseTo(1.7279, 4);
     });
 
-    it('Should return yk = 644.429 with the dataset when proxySize = [130,650,99,150,128,302,95,945,368,961] and actualAdded = [186,699,132,272,291,31,199,1890,788,1601] and if x = 386', async () => {
+    it('Should return yk = 644.429 with the dataset when proxySize = [130,650,99,150,128,302,95,945,368,961] and actualAdded = [186,699,132,272,291,331,199,1890,788,1601] and if x = 386', async () => {
       const dataset = await readCsvWithColumns(csvFile);
       const beta1 = LinearRegressionComponent.calculateBeta1(dataset);
       const beta0 = LinearRegressionComponent.calculateBeta0(beta1, dataset);

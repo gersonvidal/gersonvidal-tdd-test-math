@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { sumX, sumY, sumXY, sumX2, sumY2 } from '../common/calculate';
 
 @Component({
   selector: 'app-linear-regression',
@@ -18,27 +19,18 @@ export class LinearRegressionComponent {
     }
 
     // Initialize summations
-    let sumX = 0;
-    let sumY = 0;
-    let sumX2 = 0;
-    let sumY2 = 0;
-    let sumXY = 0;
-
-    // Calculate the necessary summations
-    for (const [x, y] of data) {
-      sumX += x;
-      sumY += y;
-      sumX2 += x * x;
-      sumY2 += y * y;
-      sumXY += x * y;
-    }
+    let sumXResult = sumX(data);
+    let sumYResult = sumY(data);
+    let sumX2Result = sumX2(data);
+    let sumXYResult = sumXY(data);
 
     // Calculate averages
-    const avgX = sumX / n;
-    const avgY = sumY / n;
+    const avgX = sumXResult / n;
+    const avgY = sumYResult / n;
 
     // Calculate beta1 using the formula
-    const beta1 = (sumXY - n * avgX * avgY) / (sumX2 - n * (avgX * avgX));
+    const beta1 =
+      (sumXYResult - n * avgX * avgY) / (sumX2Result - n * (avgX * avgX));
 
     // return parseFloat(beta1.toFixed(4));
     return beta1;
@@ -51,24 +43,16 @@ export class LinearRegressionComponent {
       throw new Error('Matrix cannot be empty');
     }
 
-    let sumX = 0;
-    let sumY = 0;
-    let sumX2 = 0;
-    let sumY2 = 0;
-    let sumXY = 0;
-
-    for (const [x, y] of data) {
-      sumX += x;
-      sumY += y;
-      sumX2 += x * x;
-      sumY2 += y * y;
-      sumXY += x * y;
-    }
+    let sumXResult = sumX(data);
+    let sumYResult = sumY(data);
+    let sumX2Result = sumX2(data);
+    let sumY2Result = sumY2(data);
+    let sumXYResult = sumXY(data);
 
     // rxy formula
-    const numerator = n * sumXY - sumX * sumY;
-    const denominatorX = n * sumX2 - sumX * sumX;
-    const denominatorY = n * sumY2 - sumY * sumY;
+    const numerator = n * sumXYResult - sumXResult * sumYResult;
+    const denominatorX = n * sumX2Result - sumXResult * sumXResult;
+    const denominatorY = n * sumY2Result - sumYResult * sumYResult;
 
     // Avoid dividing by zero
     if (denominatorX === 0 || denominatorY === 0) {
@@ -95,16 +79,11 @@ export class LinearRegressionComponent {
       throw new Error('Data set cannot be empty');
     }
 
-    let sumX = 0;
-    let sumY = 0;
+    let sumXResult = sumX(data);
+    let sumYResult = sumY(data);
 
-    for (const [x, y] of data) {
-      sumX += x;
-      sumY += y;
-    }
-
-    const avgX = sumX / n;
-    const avgY = sumY / n;
+    const avgX = sumXResult / n;
+    const avgY = sumYResult / n;
 
     const beta0 = avgY - beta1 * avgX;
 

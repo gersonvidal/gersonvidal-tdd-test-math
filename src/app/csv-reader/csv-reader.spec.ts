@@ -1,4 +1,4 @@
-import { readCSV } from './csv-reader';
+import { readCsv } from './csv-reader';
 
 describe('csvReader test suite', () => {
   const mockCsvFile = '160\n591\n114\n229\n230\n270\n128\n1657\n624\n1503\n';
@@ -12,7 +12,7 @@ describe('csvReader test suite', () => {
   const file2 = new File([csvBlob2], 'mockData.csv');
 
   it('Should return array [160, 591, 114, 229, 230, 270, 128, 1657, 624, 1503]', async () => {
-    const result = await readCSV(file);
+    const result = await readCsv(file);
 
     expect(result).toEqual([
       160, 591, 114, 229, 230, 270, 128, 1657, 624, 1503,
@@ -20,7 +20,7 @@ describe('csvReader test suite', () => {
   });
 
   it('Should return array [15.0, 69.9, 6.5, 22.4, 28.4, 65.9, 19.4, 198.7, 38.8, 138.2]', async () => {
-    const result = await readCSV(file2);
+    const result = await readCsv(file2);
 
     expect(result).toEqual([
       15.0, 69.9, 6.5, 22.4, 28.4, 65.9, 19.4, 198.7, 38.8, 138.2,

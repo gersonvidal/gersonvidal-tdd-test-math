@@ -206,4 +206,28 @@ describe('linear regression test suite', () => {
       expect(result).toBeCloseTo(49.4994, 4);
     });
   });
+
+  describe('Edge cases', () => {
+    const emptyCsv = '';
+
+    const csvBlob = new Blob([emptyCsv], { type: 'text/csv' });
+    const csvFile = new File([csvBlob], 'data.csv');
+
+    it('calculateBeta1 should throw error when csvFile is empty', async () => {
+      const dataset = await readCsvWithColumns(csvFile);
+
+      expect(() => {
+        LinearRegressionComponent.calculateBeta1(dataset);
+      }).toThrowError('Data set cannot be empty');
+    });
+
+    it('calculateBeta0 should throw error when csvFile is empty', async () => {
+      const dataset = await readCsvWithColumns(csvFile);
+
+      expect(() => {
+        LinearRegressionComponent.calculateBeta0(1, dataset);
+      }).toThrowError('Data set cannot be empty');
+    });
+
+  });
 });

@@ -5,8 +5,6 @@ import { Component } from '@angular/core';
   standalone: true,
   imports: [],
   templateUrl: './simpson.component.html',
-  styleUrl: './simpson.component.css'
+  styleUrl: './simpson.component.css',
 })
-export class SimpsonComponent {
-
-}
+export class SimpsonComponent {}

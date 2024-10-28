@@ -1,87 +1,71 @@
-export function simpson(
-  f: Function,
-  x0: number,
-  x1: number,
-  num_seg: number,
-  error: number
-): number {
-  let numSeg = num_seg;
-  let w = (x1 - x0) / numSeg; // segment width
-  let result = integrate(f, x0, x1, numSeg);
-  let newResult;
+export class SimpsonRule {
+  static simpson(
+    fn: Function,
+    x0: number,
+    x1: number,
+    numSeg: number,
+    error: number
+  ): number {
+    let p = this.calculateSimpson(fn, x0, x1, numSeg);
+    let numSegDouble = numSeg * 2;
+    let pDouble = this.calculateSimpson(fn, x0, x1, numSegDouble);
 
-  do {
-    numSeg *= 2; // Double the number of segments
-    newResult = integrate(f, x0, x1, numSeg);
-    if (Math.abs(newResult - result) < error) break;
-    result = newResult;
-  } while (true);
+    while (Math.abs(pDouble - p) > error) {
+      numSeg *= 2;
+      p = pDouble;
+      numSegDouble = numSeg * 2;
+      pDouble = this.calculateSimpson(fn, x0, x1, numSegDouble);
+    }
 
-  return newResult;
-}
-
-function integrate(
-  f: Function,
-  x0: number,
-  x1: number,
-  numSeg: number
-): number {
-  const w = (x1 - x0) / numSeg; 
-  let sum = f(x0) + f(x1);
-
-  for (let i = 1; i < numSeg; i++) {
-    const xi = x0 + i * w;
-    sum += (i % 2 === 0 ? 2 : 4) * f(xi);
+    return pDouble;
   }
 
-  return (w / 3) * sum;
-}
+  private static calculateSimpson(
+    fn: Function,
+    x0: number,
+    x1: number,
+    numSeg: number
+  ): number {
+    const W = (x1 - x0) / numSeg;
+    let oddSum = 0;
+    let evenSum = 0;
 
-function gamma(n: number): number {
-  // Lanczos approximation for Gamma function
-  const p = [
-    676.5203681218851, -1259.1392167224028, 771.32342877765313,
-    -176.61502916214059, 12.507343278686905, -0.13857109526572012,
-    9.9843695780195716e-6, 1.5056327351493116e-7,
-  ];
+    for (let i = 1; i < numSeg; i += 2) {
+      oddSum += 4 * fn(x0 + i * W);
+    }
 
-  let x = p[0];
-  for (let i = 1; i < p.length; i++) {
-    x += p[i] / (n + i);
+    for (let i = 2; i < numSeg; i += 2) {
+      evenSum += 2 * fn(x0 + i * W);
+    }
+
+    return (W / 3) * (fn(x0) + oddSum + evenSum + fn(x1));
   }
 
-  const t = n + p.length - 0.5;
-  return Math.sqrt(2 * Math.PI) * Math.pow(t, n - 0.5) * Math.exp(-t) * x;
-}
+  public static twoTimesX(x: number): number {
+    return 2 * x;
+  }
 
-export function tDistribution(x: number, dof: number): number {
-  if (dof <= 0) return 0; // Prevent invalid degrees of freedom
-  const gammaNumerator = gamma((dof + 1) / 2);
-  const gammaDenominator = Math.sqrt(dof * Math.PI) * gamma(dof / 2);
-  const multiplier = Math.pow(1 + (x * x) / dof, -(dof + 1) / 2);
-  return (gammaNumerator / gammaDenominator) * multiplier;
-}
+  public static xSquared(x: number): number {
+    return x * x;
+  }
 
-export function f1(x: number): number {
-  return 2 * x;
-}
+  public static oneDividedByX(x: number): number {
+    return 1 / x;
+  }
 
-export function f2(x: number): number {
-  return x * x;
-}
+  public static tDistribution(x: number, dof: number): number {
+    const numerator = this.gamma((dof + 1) / 2);
+    const denominator = Math.sqrt(dof * Math.PI) * this.gamma(dof / 2);
+    const exponent = -((dof + 1) / 2);
 
-export function f3(x: number): number {
-  return 1 / x;
-}
+    return (
+      (numerator / denominator) * Math.pow(1 + this.xSquared(x) / dof, exponent)
+    );
+  }
 
-export function f4(x: number): number {
-  return tDistribution(x, 9); 
-}
-
-export function f5(x: number): number {
-  return tDistribution(x, 10); 
-}
-
-export function f6(x: number): number {
-  return tDistribution(x, 30); 
+  public static gamma(n: number): number {
+    if (n === 1) return 1;
+    if (n === 0.5) return Math.sqrt(Math.PI);
+    return (n - 1) * this.gamma(n - 1);
+  }
 }

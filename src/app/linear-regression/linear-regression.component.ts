@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { sumX, sumY, sumXY, sumX2} from '../common/calculate';
+import { sumX, sumY, sumXY, sumX2 } from '../common/calculate';
 
 @Component({
   selector: 'app-linear-regression',
@@ -9,7 +9,6 @@ import { sumX, sumY, sumXY, sumX2} from '../common/calculate';
   styleUrl: './linear-regression.component.css',
 })
 export class LinearRegressionComponent {
-
   static calculateBeta1(data: number[][]): number {
     const n = data.length; // Get the length of the data
 

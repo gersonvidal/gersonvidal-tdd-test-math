@@ -1,4 +1,4 @@
-import { calculateStandardDeviation } from './standard-deviation.component';
+import { StandardDeviationComponent } from './standard-deviation.component';
 import { readCsv } from '../csv-reader/csv-reader';
 
 describe('standard deviation test suite', () => {
@@ -18,14 +18,14 @@ describe('standard deviation test suite', () => {
 
   it('Should return standard deviation of 572.03 if input is [160, 591, 114, 229, 230, 270, 128, 1657, 624, 1503]', async () => {
     const data = await readCsv(file);
-    const result = calculateStandardDeviation(data);
+    const result = StandardDeviationComponent.calculateStandardDeviation(data);
 
     expect(result).toBe(572.03);
   });
 
   it(' Should return standard deviation of 62.26 if input is [15.0, 69.9, 6.5, 22.4, 28.4, 65.9, 19.4, 198.7, 38.8, 138.2]', async () => {
     const data = await readCsv(file2);
-    const result = calculateStandardDeviation(data);
+    const result = StandardDeviationComponent.calculateStandardDeviation(data);
 
     expect(result).toBe(62.26);
   });
@@ -33,6 +33,6 @@ describe('standard deviation test suite', () => {
   it('Should throw an error if the array is empty', async () => {
     const data = await readCsv(file3);
 
-    expect(() => calculateStandardDeviation(data)).toThrowError('The array is empty.');
+    expect(() => StandardDeviationComponent.calculateStandardDeviation(data)).toThrowError('The array is empty.');
   });
 });

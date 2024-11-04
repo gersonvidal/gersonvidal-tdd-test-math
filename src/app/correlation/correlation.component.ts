@@ -1,14 +1,46 @@
 import { Component } from '@angular/core';
 import { sumX, sumY, sumXY, sumX2, sumY2 } from '../common/calculate';
+import { FormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-correlation',
   standalone: true,
-  imports: [],
+  imports: [FormsModule, CommonModule],
   templateUrl: './correlation.component.html',
   styleUrl: './correlation.component.css',
 })
 export class CorrelationComponent {
+  xValues: string = '';
+  yValues: string = '';
+  correlationResult: number | null = null;
+  rSquaredResult: number | null = null;
+
+  calculateCorrelation() {
+    const xArray = this.parseInput(this.xValues);
+    const yArray = this.parseInput(this.yValues);
+
+    if (xArray.length === yArray.length && xArray.length > 0) {
+      const data = xArray.map((x, index) => [x, yArray[index]]);
+      const r = CorrelationComponent.calculateCorrelationCoefficient(data);
+      this.correlationResult = parseFloat(r.toFixed(4));
+      this.rSquaredResult = parseFloat(
+        CorrelationComponent.calculateRSquared(r).toFixed(4)
+      );
+    } else {
+      alert(
+        'Please ensure both X and Y values have the same number of entries.'
+      );
+    }
+  }
+
+  private parseInput(input: string): number[] {
+    return input
+      .split(',')
+      .map((value) => parseFloat(value.trim()))
+      .filter((value) => !isNaN(value));
+  }
+
   static calculateCorrelationCoefficient(data: number[][]): number {
     const n = data.length;
 

@@ -1,0 +1,31 @@
+<div class="container">
+  <h3>Linear Regression Calculator</h3>
+
+  <label for="xValues">Enter X values (comma-separated):</label>
+  <input
+    id="xValues"
+    type="text"
+    [(ngModel)]="xValues"
+    placeholder="130,650,99"
+  />
+
+  <label for="yValues">Enter Y values (comma-separated):</label>
+  <input
+    id="yValues"
+    type="text"
+    [(ngModel)]="yValues"
+    placeholder="186,699,132"
+  />
+
+  <label for="xk">Enter Xk (value for prediction):</label>
+  <input id="xk" type="number" [(ngModel)]="xk" placeholder="e.g., 386" />
+
+  <button (click)="calculateRegression()">Calculate Regression</button>
+
+  <div *ngIf="regressionResults">
+    <h4>Results:</h4>
+    <p>B0 (Intercept): {{ regressionResults.B0 }}</p>
+    <p>B1 (Slope): {{ regressionResults.B1 }}</p>
+    <p>Predicted Y for Xk={{ xk }}: {{ regressionResults.yk }}</p>
+  </div>
+</div>

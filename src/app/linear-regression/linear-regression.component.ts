@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { sumX, sumY, sumXY, sumX2, sumY2 } from '../common/calculate';
+import { sumX, sumY, sumXY, sumX2} from '../common/calculate';
 
 @Component({
   selector: 'app-linear-regression',

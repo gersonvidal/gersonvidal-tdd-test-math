@@ -1,1 +1,27 @@
-<p>mean works!</p>
+<div>
+    <h3>Mean Calculator</h3>
+    
+    <form (ngSubmit)="addNumber()">
+      <input
+        type="number"
+        name="number"
+        placeholder="Enter a number"
+        [(ngModel)]="numberInput"
+        #numberInputField="ngModel"
+        required
+      />
+      <button type="submit" [disabled]="!numberInputField.valid">Add number</button>
+    </form>
+    
+    <div class="numbers-list">
+      <h4>Entered numbers:</h4>
+      <ul>
+        <li *ngFor="let num of numbers">{{ num }}</li>
+      </ul>
+    </div>
+  
+    <button (click)="calculateMean()" [disabled]="numbers.length === 0">Calculate Mean</button>
+    
+    <div class="result">Mean: {{ meanResult }}</div>
+  </div>
+  

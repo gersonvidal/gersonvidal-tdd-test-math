@@ -1,1 +1,34 @@
-<p>standard-deviation works!</p>
+<div>
+    <h3>Standard Deviation Calculator</h3>
+  
+    <form (ngSubmit)="addNumber()">
+      <input
+        type="number"
+        name="number"
+        placeholder="Enter a number"
+        [(ngModel)]="numberInput"
+        #numberInputField="ngModel"
+        required
+      />
+      <button type="submit" [disabled]="!numberInputField.valid">
+        Add Number
+      </button>
+    </form>
+  
+    <div class="numbers-list">
+      <h4>Entered Numbers:</h4>
+      <ul>
+        <li *ngFor="let num of numbers">{{ num }}</li>
+      </ul>
+    </div>
+  
+    <button
+      (click)="calculateStandardDeviation()"
+      [disabled]="numbers.length === 0"
+    >
+      Calculate Standard Deviation
+    </button>
+  
+    <div class="result">Standard Deviation: {{ stdDeviationResult }}</div>
+  </div>
+  

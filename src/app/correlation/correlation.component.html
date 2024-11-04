@@ -1,1 +1,21 @@
-<p>correlation works!</p>
+<div class="container">
+    <h3>Correlation Coefficient Calculator</h3>
+  
+    <!-- Input for X and Y values -->
+    <label for="xValues">Enter X values (comma-separated):</label>
+    <input id="xValues" type="text" [(ngModel)]="xValues" placeholder="130,650,99" />
+  
+    <label for="yValues">Enter Y values (comma-separated):</label>
+    <input id="yValues" type="text" [(ngModel)]="yValues" placeholder="186,699,132" />
+  
+    <!-- Button to calculate correlation -->
+    <button (click)="calculateCorrelation()">Calculate Correlation</button>
+  
+    <!-- Display results if available -->
+    <div *ngIf="correlationResult !== null && rSquaredResult !== null">
+      <h4>Results:</h4>
+      <p>Correlation Coefficient (r): {{ correlationResult }}</p>
+      <p>R-Squared (r²): {{ rSquaredResult }}</p>
+    </div>
+  </div>
+  

@@ -1,5 +1,4 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { LinearRegressionComponent } from './linear-regression.component';
 import { readCsvWithColumns } from '../csv-reader/csv-reader';
 
@@ -228,6 +227,5 @@ describe('linear regression test suite', () => {
         LinearRegressionComponent.calculateBeta0(1, dataset);
       }).toThrowError('Data set cannot be empty');
     });
-
   });
 });

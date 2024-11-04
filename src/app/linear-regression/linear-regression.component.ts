@@ -1,14 +1,48 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { sumX, sumY, sumXY, sumX2 } from '../common/calculate';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-linear-regression',
   standalone: true,
-  imports: [],
+  imports: [CommonModule, FormsModule],
   templateUrl: './linear-regression.component.html',
   styleUrl: './linear-regression.component.css',
 })
-export class LinearRegressionComponent {
+export class LinearRegressionComponent implements OnInit {
+  ngOnInit(): void {}
+  
+  xValues: string = '';
+  yValues: string = '';
+  xk: number = 0;
+  regressionResults: { B0: number; B1: number; yk: number } | null = null;
+
+  calculateRegression() {
+    const xArray = this.parseInput(this.xValues);
+    const yArray = this.parseInput(this.yValues);
+
+    if (xArray.length === yArray.length && xArray.length > 0) {
+      const data = xArray.map((x, index) => [x, yArray[index]]);
+      const B1 = LinearRegressionComponent.calculateBeta1(data);
+      const B0 = LinearRegressionComponent.calculateBeta0(B1, data);
+      const yk = LinearRegressionComponent.calculateY(B0, B1, this.xk);
+
+      this.regressionResults = { B0, B1, yk };
+    } else {
+      alert(
+        'Please ensure both X and Y values have the same number of entries.'
+      );
+    }
+  }
+
+  private parseInput(input: string): number[] {
+    return input
+      .split(',')
+      .map((value) => parseFloat(value.trim()))
+      .filter((value) => !isNaN(value));
+  }
+
   static calculateBeta1(data: number[][]): number {
     const n = data.length; // Get the length of the data
 

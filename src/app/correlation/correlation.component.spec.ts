@@ -219,7 +219,7 @@ describe('CorrelationComponent', () => {
     });
   });
 
-  describe('Component tests', () => {
+  describe('Correlation Component Tests', () => {
     it('should parse input correctly', () => {
       const input = '163,765,141,166,137,355,136,1206,433,1130';
       const expectedOutput = [

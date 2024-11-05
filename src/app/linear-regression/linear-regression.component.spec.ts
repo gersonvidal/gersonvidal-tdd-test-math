@@ -228,4 +228,64 @@ describe('linear regression test suite', () => {
       }).toThrowError('Data set cannot be empty');
     });
   });
+
+  describe('Linear Regression Component Tests', () => {
+    it('should parse input correctly', () => {
+      const input = '163,765,141,166,137,355,136,1206,433,1130';
+      const expectedOutput = [
+        163, 765, 141, 166, 137, 355, 136, 1206, 433, 1130,
+      ];
+
+      const result = (component as any).parseInput(input);
+
+      expect(result).toEqual(expectedOutput);
+    });
+
+    it('should filter out non-numeric values in parseInput', () => {
+      const input = '15.0,69.9,6.5,a,28.4,b,19.4,198.7,c,138.2';
+      const expectedOutput = [15.0, 69.9, 6.5, 28.4, 19.4, 198.7, 138.2];
+
+      const result = (component as any).parseInput(input);
+
+      expect(result).toEqual(expectedOutput);
+    });
+
+    it('should calculate B0, B1, and yk correctly with valid inputs', () => {
+      component.xValues = '163,765,141,166,137,355,136,1206,433,1130';
+      component.yValues = '15.0,69.9,6.5,22.4,28.4,65.9,19.4,198.7,38.8,138.2';
+      component.xk = 386;
+
+      component.calculateRegression();
+
+      expect(component.regressionResults).toBeDefined();
+      expect(component.regressionResults?.B0).toBeCloseTo(-4.604, 3);
+      expect(component.regressionResults?.B1).toBeCloseTo(0.140164, 6);
+      expect(component.regressionResults?.yk).toBeCloseTo(49.4994, 4);
+    });
+
+    it('should alert if xValues and yValues have different lengths', () => {
+      spyOn(window, 'alert');
+      component.xValues = '163,765,141,166,137,355,136,1206,433,1130';
+      component.yValues = '15.0,69.9,6.5,22.4,28.4,65.9,19.4,198.7';
+
+      component.calculateRegression();
+
+      expect(window.alert).toHaveBeenCalledWith(
+        'Please ensure both X and Y values have the same number of entries.'
+      );
+    });
+
+    it('should not calculate regression if inputs are empty and alert', () => {
+      spyOn(window, 'alert');
+      component.xValues = '';
+      component.yValues = '';
+
+      component.calculateRegression();
+
+      expect(component.regressionResults).toBeNull();
+      expect(window.alert).toHaveBeenCalledWith(
+        'Please ensure both X and Y values have the same number of entries.'
+      );
+    });
+  });
 });

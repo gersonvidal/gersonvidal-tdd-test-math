@@ -1,0 +1,32 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    gap: 10px; /* Espacio entre los elementos */
+    max-width: 400px; /* Ajusta el ancho como prefieras */
+    margin: auto;
+    padding: 20px;
+    background-color: #ffffff44;
+    border-radius: 8px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+  }
+  
+  label,
+  input,
+  button {
+    display: block;
+    width: 100%;
+    font-size: 16px;
+  }
+  
+  button {
+    width: auto;
+    align-self: flex-start;
+    padding: 8px 12px;
+    cursor: pointer;
+    font-weight: bold;
+    color: white;
+    background-color: #007bff;
+    border: none;
+    border-radius: 4px;
+  }
+  

@@ -218,4 +218,53 @@ describe('CorrelationComponent', () => {
       );
     });
   });
+
+  describe('Correlation Component Tests', () => {
+    it('should parse input correctly', () => {
+      const input = '163,765,141,166,137,355,136,1206,433,1130';
+      const expectedOutput = [
+        163, 765, 141, 166, 137, 355, 136, 1206, 433, 1130,
+      ];
+
+      const result = (component as any).parseInput(input);
+
+      expect(result).toEqual(expectedOutput);
+    });
+
+    it('should calculate correlation coefficient and r-squared with valid inputs', () => {
+      component.xValues = '163,765,141,166,137,355,136,1206,433,1130';
+      component.yValues = '15.0,69.9,6.5,22.4,28.4,65.9,19.4,198.7,38.8,138.2';
+
+      component.calculateCorrelation();
+
+      expect(component.correlationResult).toBeCloseTo(0.948, 3);
+      expect(component.rSquaredResult).toBeCloseTo(0.8988, 4);
+    });
+
+    it('should alert if xValues and yValues have different lengths', () => {
+      spyOn(window, 'alert');
+      component.xValues = '163,765,141,166,137,355,136,1206,433,1130';
+      component.yValues = '15.0,69.9,6.5,22.4,28.4,65.9,19.4,198.7,38.8';
+
+      component.calculateCorrelation();
+
+      expect(window.alert).toHaveBeenCalledWith(
+        'Please ensure both X and Y values have the same number of entries.'
+      );
+    });
+
+    it('should not calculate if inputs are empty and alert', () => {
+      spyOn(window, 'alert');
+      component.xValues = '';
+      component.yValues = '';
+
+      component.calculateCorrelation();
+
+      expect(component.correlationResult).toBeNull();
+      expect(component.rSquaredResult).toBeNull();
+      expect(window.alert).toHaveBeenCalledWith(
+        'Please ensure both X and Y values have the same number of entries.'
+      );
+    });
+  });
 });

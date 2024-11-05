@@ -1,1 +1,41 @@
-<p>simpson works!</p>
+<div class="container">
+  <h3>Simpson's Rule Calculator</h3>
+
+  <label for="function">Select function f(x):</label>
+  <select id="function" [(ngModel)]="selectedFunction">
+    <option value="twoTimesX">2 * x</option>
+    <option value="xSquared">x * x</option>
+    <option value="oneDividedByX">1 / x</option>
+    <option value="tDistribution">T Distribution</option>
+  </select>
+
+  <label for="x0">Enter x0 (start point):</label>
+  <input id="x0" type="number" [(ngModel)]="x0" placeholder="0" />
+
+  <label for="x1">Enter x1 (end point):</label>
+  <input id="x1" type="number" [(ngModel)]="x1" placeholder="4" />
+
+  <label for="numSeg">Enter number of segments:</label>
+  <input id="numSeg" type="number" [(ngModel)]="numSeg" placeholder="10" />
+
+  <label for="error">Enter error tolerance:</label>
+  <input
+    id="error"
+    type="number"
+    step="0.0001"
+    [(ngModel)]="error"
+    placeholder="0.0001"
+  />
+
+  <div *ngIf="selectedFunction === 'tDistribution'">
+    <label for="dof">Enter degrees of freedom (dof):</label>
+    <input id="dof" type="number" [(ngModel)]="dof" placeholder="e.g., 1" />
+  </div>
+
+  <button (click)="calculateSimpson()">Calculate</button>
+
+  <div *ngIf="result !== null">
+    <h4>Result:</h4>
+    <p>Approximate Area: {{ result }}</p>
+  </div>
+</div>
